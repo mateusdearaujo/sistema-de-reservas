@@ -11,9 +11,21 @@ $lista = $carros->getCarros();
 
 if(!empty($_POST['carro'])) {
 	$carro = addslashes($_POST['carro']);
-	$data_inicio = addslashes($_POST['data_inicio']);
-	$data_fim = addslashes($_POST['data_fim']);
+	$data_inicio = explode('/', addslashes($_POST['data_inicio']));
+	$data_fim = explode('/', addslashes($_POST['data_fim']));
 	$pessoa = addslashes($_POST['pessoa']);
+
+	// Convertendo a data para o padrão internacional
+	$data_inicio = $data_inicio[2]."-".$data_inicio[1]."-".$data_inicio[0];
+	$data_fim = $data_fim[2]."-".$data_fim[1]."-".$data_fim[0];
+
+	if($reservas->verificarDisponibilidade($carro, $data_inicio, $data_fim)) {
+		$reservas->reservar($carro, $data_inicio, $data_fim, $pessoa);
+		header("Location: index.php");
+		exit;
+	} else {
+		echo "Este carro já está reservado neste período.";
+	}
 }
 
 ?>
@@ -57,7 +69,6 @@ if(!empty($_POST['carro'])) {
 		</div>
 	</form>
 </main>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
