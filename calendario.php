@@ -26,7 +26,7 @@
                         $dr_fim = strtotime($item['data_fim']);
 
                         if($w >= $dr_inicio && $w <= $dr_fim) {
-                            echo $item['pessoa']."(".$item['id_carro'].")<br/>";
+                            echo $item['pessoa']." <strong>(".$nome_carro['nome'].")</strong><br/>";
                         }
                     }
                     ?></td>
