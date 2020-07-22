@@ -4,7 +4,6 @@ require "classes/carros.class.php";
 require "classes/reservas.class.php";
 
 $reservas = new Reservas($pdo);
-$lista = $reservas->getReservas();
 $carros = new Carros($pdo);
 
 $lista = $carros->getCarros();
