@@ -7,3 +7,6 @@
 #top a {
 	height: 40px;
 }
+.container {
+	max-width: 1600px;
+}
