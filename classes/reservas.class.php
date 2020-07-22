@@ -7,10 +7,12 @@ class Reservas {
 		$this->pdo = $pdo;
 	}
 
-	public function getReservas() {
+	public function getReservas($data_inicio, $data_fim) {
 		$array = array();
 
-		$sql = $this->pdo->query("SELECT * FROM reservas");
+		$sql = $this->pdo->prepare("SELECT * FROM reservas WHERE data_fim > :data_inicio AND data_inicio < :data_fim");
+		$sql->bindValue(":data_inicio", $data_inicio);
+		$sql->bindValue(":data_fim", $data_fim);
 		$sql->execute();
 
 		if($sql->rowCount() > 0) {
@@ -21,8 +23,7 @@ class Reservas {
 	}
 
 	public function verificarDisponibilidade($carro, $data_inicio, $data_fim) {
-		$sql = $this->pdo->prepare("SELECT * FROM reservas WHERE id_carro = :carro 
-		AND (data_fim > :data_inicio AND data_inicio < :data_fim)");
+		$sql = $this->pdo->prepare("SELECT * FROM reservas WHERE id_carro = :carro AND (data_fim > :data_inicio AND data_inicio < :data_fim)");
 		$sql->bindValue(":carro", $carro);
 		$sql->bindValue(":data_inicio", $data_inicio);
 		$sql->bindValue(":data_fim", $data_fim);

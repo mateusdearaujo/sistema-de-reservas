@@ -1,5 +1,5 @@
 <?php
-require "config.php";
+include "config.php";
 require "classes/carros.class.php";
 require "classes/reservas.class.php";
 
